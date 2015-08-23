@@ -37,35 +37,41 @@ private object LoggerMacro {
     q"if ($underlying.isErrorEnabled) $underlying.error($message, $cause)"
   }
 
-  def errorMessageArgs(c: LoggerContext)(message: c.Expr[String], args: c.Expr[AnyRef]*) = {
+  def errorCause(c: LoggerContext)(cause: c.Expr[Throwable]) = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
-    if (args.length == 2)
-      q"if ($underlying.isErrorEnabled) $underlying.error($message, List(${args(0)}, ${args(1)}): _*)"
-    else
-      q"if ($underlying.isErrorEnabled) $underlying.error($message, ..$args)"
+    q"""if ($underlying.isErrorEnabled) $underlying.error("", $cause)"""
   }
 
-  def errorMessageMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String]) = {
-    import c.universe._
-    val underlying = q"${c.prefix}.underlying"
-    q"if ($underlying.isErrorEnabled) $underlying.error($marker, $message)"
-  }
+  // def errorMessageArgs(c: LoggerContext)(message: c.Expr[String], args: c.Expr[AnyRef]*) = {
+  //   import c.universe._
+  //   val underlying = q"${c.prefix}.underlying"
+  //   if (args.length == 2)
+  //     q"if ($underlying.isErrorEnabled) $underlying.error($message, List(${args(0)}, ${args(1)}): _*)"
+  //   else
+  //     q"if ($underlying.isErrorEnabled) $underlying.error($message, ..$args)"
+  // }
 
-  def errorMessageCauseMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], cause: c.Expr[Throwable]) = {
-    import c.universe._
-    val underlying = q"${c.prefix}.underlying"
-    q"if ($underlying.isErrorEnabled) $underlying.error($marker, $message, $cause)"
-  }
+  // def errorMessageMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String]) = {
+  //   import c.universe._
+  //   val underlying = q"${c.prefix}.underlying"
+  //   q"if ($underlying.isErrorEnabled) $underlying.error($marker, $message)"
+  // }
 
-  def errorMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[AnyRef]*) = {
-    import c.universe._
-    val underlying = q"${c.prefix}.underlying"
-    if (args.length == 2)
-      q"if ($underlying.isErrorEnabled) $underlying.error($marker, $message, List(${args(0)}, ${args(1)}): _*)"
-    else
-      q"if ($underlying.isErrorEnabled) $underlying.error($marker, $message, ..$args)"
-  }
+  // def errorMessageCauseMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], cause: c.Expr[Throwable]) = {
+  //   import c.universe._
+  //   val underlying = q"${c.prefix}.underlying"
+  //   q"if ($underlying.isErrorEnabled) $underlying.error($marker, $message, $cause)"
+  // }
+
+  // def errorMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[AnyRef]*) = {
+  //   import c.universe._
+  //   val underlying = q"${c.prefix}.underlying"
+  //   if (args.length == 2)
+  //     q"if ($underlying.isErrorEnabled) $underlying.error($marker, $message, List(${args(0)}, ${args(1)}): _*)"
+  //   else
+  //     q"if ($underlying.isErrorEnabled) $underlying.error($marker, $message, ..$args)"
+  // }
 
   // Warn
 
@@ -81,35 +87,41 @@ private object LoggerMacro {
     q"if ($underlying.isWarnEnabled) $underlying.warn($message, $cause)"
   }
 
-  def warnMessageArgs(c: LoggerContext)(message: c.Expr[String], args: c.Expr[AnyRef]*) = {
+  def warnCause(c: LoggerContext)(cause: c.Expr[Throwable]) = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
-    if (args.length == 2)
-      q"if ($underlying.isWarnEnabled) $underlying.warn($message, List(${args(0)}, ${args(1)}): _*)"
-    else
-      q"if ($underlying.isWarnEnabled) $underlying.warn($message, ..$args)"
+    q"""if ($underlying.isWarnEnabled) $underlying.warn("", $cause)"""
   }
 
-  def warnMessageMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String]) = {
-    import c.universe._
-    val underlying = q"${c.prefix}.underlying"
-    q"if ($underlying.isWarnEnabled) $underlying.warn($marker, $message)"
-  }
+  // def warnMessageArgs(c: LoggerContext)(message: c.Expr[String], args: c.Expr[AnyRef]*) = {
+  //   import c.universe._
+  //   val underlying = q"${c.prefix}.underlying"
+  //   if (args.length == 2)
+  //     q"if ($underlying.isWarnEnabled) $underlying.warn($message, List(${args(0)}, ${args(1)}): _*)"
+  //   else
+  //     q"if ($underlying.isWarnEnabled) $underlying.warn($message, ..$args)"
+  // }
 
-  def warnMessageCauseMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], cause: c.Expr[Throwable]) = {
-    import c.universe._
-    val underlying = q"${c.prefix}.underlying"
-    q"if ($underlying.isWarnEnabled) $underlying.warn($marker, $message, $cause)"
-  }
+  // def warnMessageMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String]) = {
+  //   import c.universe._
+  //   val underlying = q"${c.prefix}.underlying"
+  //   q"if ($underlying.isWarnEnabled) $underlying.warn($marker, $message)"
+  // }
 
-  def warnMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[AnyRef]*) = {
-    import c.universe._
-    val underlying = q"${c.prefix}.underlying"
-    if (args.length == 2)
-      q"if ($underlying.isWarnEnabled) $underlying.warn($marker, $message, List(${args(0)}, ${args(1)}): _*)"
-    else
-      q"if ($underlying.isWarnEnabled) $underlying.warn($marker, $message, ..$args)"
-  }
+  // def warnMessageCauseMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], cause: c.Expr[Throwable]) = {
+  //   import c.universe._
+  //   val underlying = q"${c.prefix}.underlying"
+  //   q"if ($underlying.isWarnEnabled) $underlying.warn($marker, $message, $cause)"
+  // }
+
+  // def warnMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[AnyRef]*) = {
+  //   import c.universe._
+  //   val underlying = q"${c.prefix}.underlying"
+  //   if (args.length == 2)
+  //     q"if ($underlying.isWarnEnabled) $underlying.warn($marker, $message, List(${args(0)}, ${args(1)}): _*)"
+  //   else
+  //     q"if ($underlying.isWarnEnabled) $underlying.warn($marker, $message, ..$args)"
+  // }
 
   // Info
 
@@ -125,35 +137,41 @@ private object LoggerMacro {
     q"if ($underlying.isInfoEnabled) $underlying.info($message, $cause)"
   }
 
-  def infoMessageArgs(c: LoggerContext)(message: c.Expr[String], args: c.Expr[AnyRef]*) = {
+  def infoCause(c: LoggerContext)(cause: c.Expr[Throwable]) = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
-    if (args.length == 2)
-      q"if ($underlying.isInfoEnabled) $underlying.info($message, List(${args(0)}, ${args(1)}): _*)"
-    else
-      q"if ($underlying.isInfoEnabled) $underlying.info($message, ..$args)"
+    q"""if ($underlying.isInfoEnabled) $underlying.info("", $cause)"""
   }
 
-  def infoMessageMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String]) = {
-    import c.universe._
-    val underlying = q"${c.prefix}.underlying"
-    q"if ($underlying.isInfoEnabled) $underlying.info($marker, $message)"
-  }
+  // def infoMessageArgs(c: LoggerContext)(message: c.Expr[String], args: c.Expr[AnyRef]*) = {
+  //   import c.universe._
+  //   val underlying = q"${c.prefix}.underlying"
+  //   if (args.length == 2)
+  //     q"if ($underlying.isInfoEnabled) $underlying.info($message, List(${args(0)}, ${args(1)}): _*)"
+  //   else
+  //     q"if ($underlying.isInfoEnabled) $underlying.info($message, ..$args)"
+  // }
 
-  def infoMessageCauseMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], cause: c.Expr[Throwable]) = {
-    import c.universe._
-    val underlying = q"${c.prefix}.underlying"
-    q"if ($underlying.isInfoEnabled) $underlying.info($marker, $message, $cause)"
-  }
+  // def infoMessageMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String]) = {
+  //   import c.universe._
+  //   val underlying = q"${c.prefix}.underlying"
+  //   q"if ($underlying.isInfoEnabled) $underlying.info($marker, $message)"
+  // }
 
-  def infoMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[AnyRef]*) = {
-    import c.universe._
-    val underlying = q"${c.prefix}.underlying"
-    if (args.length == 2)
-      q"if ($underlying.isInfoEnabled) $underlying.info($marker, $message, List(${args(0)}, ${args(1)}): _*)"
-    else
-      q"if ($underlying.isInfoEnabled) $underlying.info($marker, $message, ..$args)"
-  }
+  // def infoMessageCauseMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], cause: c.Expr[Throwable]) = {
+  //   import c.universe._
+  //   val underlying = q"${c.prefix}.underlying"
+  //   q"if ($underlying.isInfoEnabled) $underlying.info($marker, $message, $cause)"
+  // }
+
+  // def infoMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[AnyRef]*) = {
+  //   import c.universe._
+  //   val underlying = q"${c.prefix}.underlying"
+  //   if (args.length == 2)
+  //     q"if ($underlying.isInfoEnabled) $underlying.info($marker, $message, List(${args(0)}, ${args(1)}): _*)"
+  //   else
+  //     q"if ($underlying.isInfoEnabled) $underlying.info($marker, $message, ..$args)"
+  // }
 
   // Debug
 
@@ -169,35 +187,41 @@ private object LoggerMacro {
     q"if ($underlying.isDebugEnabled) $underlying.debug($message, $cause)"
   }
 
-  def debugMessageArgs(c: LoggerContext)(message: c.Expr[String], args: c.Expr[AnyRef]*) = {
+  def debugCause(c: LoggerContext)(cause: c.Expr[Throwable]) = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
-    if (args.length == 2)
-      q"if ($underlying.isDebugEnabled) $underlying.debug($message, List(${args(0)}, ${args(1)}): _*)"
-    else
-      q"if ($underlying.isDebugEnabled) $underlying.debug($message, ..$args)"
+    q"""if ($underlying.isDebugEnabled) $underlying.debug("", $cause)"""
   }
 
-  def debugMessageMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String]) = {
-    import c.universe._
-    val underlying = q"${c.prefix}.underlying"
-    q"if ($underlying.isDebugEnabled) $underlying.debug($marker, $message)"
-  }
+  // def debugMessageArgs(c: LoggerContext)(message: c.Expr[String], args: c.Expr[AnyRef]*) = {
+  //   import c.universe._
+  //   val underlying = q"${c.prefix}.underlying"
+  //   if (args.length == 2)
+  //     q"if ($underlying.isDebugEnabled) $underlying.debug($message, List(${args(0)}, ${args(1)}): _*)"
+  //   else
+  //     q"if ($underlying.isDebugEnabled) $underlying.debug($message, ..$args)"
+  // }
 
-  def debugMessageCauseMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], cause: c.Expr[Throwable]) = {
-    import c.universe._
-    val underlying = q"${c.prefix}.underlying"
-    q"if ($underlying.isDebugEnabled) $underlying.debug($marker, $message, $cause)"
-  }
+  // def debugMessageMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String]) = {
+  //   import c.universe._
+  //   val underlying = q"${c.prefix}.underlying"
+  //   q"if ($underlying.isDebugEnabled) $underlying.debug($marker, $message)"
+  // }
 
-  def debugMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[AnyRef]*) = {
-    import c.universe._
-    val underlying = q"${c.prefix}.underlying"
-    if (args.length == 2)
-      q"if ($underlying.isDebugEnabled) $underlying.debug($marker, $message, List(${args(0)}, ${args(1)}): _*)"
-    else
-      q"if ($underlying.isDebugEnabled) $underlying.debug($marker, $message, ..$args)"
-  }
+  // def debugMessageCauseMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], cause: c.Expr[Throwable]) = {
+  //   import c.universe._
+  //   val underlying = q"${c.prefix}.underlying"
+  //   q"if ($underlying.isDebugEnabled) $underlying.debug($marker, $message, $cause)"
+  // }
+
+  // def debugMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[AnyRef]*) = {
+  //   import c.universe._
+  //   val underlying = q"${c.prefix}.underlying"
+  //   if (args.length == 2)
+  //     q"if ($underlying.isDebugEnabled) $underlying.debug($marker, $message, List(${args(0)}, ${args(1)}): _*)"
+  //   else
+  //     q"if ($underlying.isDebugEnabled) $underlying.debug($marker, $message, ..$args)"
+  // }
 
   // Trace
 
@@ -213,34 +237,40 @@ private object LoggerMacro {
     q"if ($underlying.isTraceEnabled) $underlying.trace($message, $cause)"
   }
 
-  def traceMessageArgs(c: LoggerContext)(message: c.Expr[String], args: c.Expr[AnyRef]*) = {
+  def traceCause(c: LoggerContext)(cause: c.Expr[Throwable]) = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
-    if (args.length == 2)
-      q"if ($underlying.isTraceEnabled) $underlying.trace($message, List(${args(0)}, ${args(1)}): _*)"
-    else
-      q"if ($underlying.isTraceEnabled) $underlying.trace($message, ..$args)"
+    q"""if ($underlying.isTraceEnabled) $underlying.trace("", $cause)"""
   }
 
-  def traceMessageMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String]) = {
-    import c.universe._
-    val underlying = q"${c.prefix}.underlying"
-    q"if ($underlying.isTraceEnabled) $underlying.trace($marker, $message)"
-  }
+  // def traceMessageArgs(c: LoggerContext)(message: c.Expr[String], args: c.Expr[AnyRef]*) = {
+  //   import c.universe._
+  //   val underlying = q"${c.prefix}.underlying"
+  //   if (args.length == 2)
+  //     q"if ($underlying.isTraceEnabled) $underlying.trace($message, List(${args(0)}, ${args(1)}): _*)"
+  //   else
+  //     q"if ($underlying.isTraceEnabled) $underlying.trace($message, ..$args)"
+  // }
 
-  def traceMessageCauseMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], cause: c.Expr[Throwable]) = {
-    import c.universe._
-    val underlying = q"${c.prefix}.underlying"
-    q"if ($underlying.isTraceEnabled) $underlying.trace($marker, $message, $cause)"
-  }
+  // def traceMessageMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String]) = {
+  //   import c.universe._
+  //   val underlying = q"${c.prefix}.underlying"
+  //   q"if ($underlying.isTraceEnabled) $underlying.trace($marker, $message)"
+  // }
 
-  def traceMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[AnyRef]*) = {
-    import c.universe._
-    val underlying = q"${c.prefix}.underlying"
-    if (args.length == 2)
-      q"if ($underlying.isTraceEnabled) $underlying.trace($marker, $message, List(${args(0)}, ${args(1)}): _*)"
-    else
-      q"if ($underlying.isTraceEnabled) $underlying.trace($marker, $message, ..$args)"
-  }
+  // def traceMessageCauseMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], cause: c.Expr[Throwable]) = {
+  //   import c.universe._
+  //   val underlying = q"${c.prefix}.underlying"
+  //   q"if ($underlying.isTraceEnabled) $underlying.trace($marker, $message, $cause)"
+  // }
+
+  // def traceMessageArgsMarker(c: LoggerContext)(marker: c.Expr[Marker], message: c.Expr[String], args: c.Expr[AnyRef]*) = {
+  //   import c.universe._
+  //   val underlying = q"${c.prefix}.underlying"
+  //   if (args.length == 2)
+  //     q"if ($underlying.isTraceEnabled) $underlying.trace($marker, $message, List(${args(0)}, ${args(1)}): _*)"
+  //   else
+  //     q"if ($underlying.isTraceEnabled) $underlying.trace($marker, $message, ..$args)"
+  // }
 
 }

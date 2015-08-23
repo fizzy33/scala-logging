@@ -60,30 +60,47 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
     }
   }
 
-  "Calling error with a message and parameters" should {
+  "Calling error with a cause" should {
 
     "call the underlying logger's error method if the error level is enabled" in {
       val f = fixture(_.isErrorEnabled, true)
       import f._
-      logger.error(msg, arg1)
-      verify(underlying).error(msg, List(arg1): _*)
-      logger.error(msg, arg1, arg2)
-      verify(underlying).error(msg, List(arg1, arg2): _*)
-      logger.error(msg, arg1, arg2, arg3)
-      verify(underlying).error(msg, arg1, arg2, arg3)
+      logger.error(cause)
+      verify(underlying).error("", cause)
     }
 
     "not call the underlying logger's error method if the error level is not enabled" in {
       val f = fixture(_.isErrorEnabled, false)
       import f._
-      logger.error(msg, arg1)
-      verify(underlying, never).error(msg, List(arg1): _*)
-      logger.error(msg, arg1, arg2)
-      verify(underlying, never).error(msg, List(arg1, arg2): _*)
-      logger.error(msg, arg1, arg2, arg3)
-      verify(underlying, never).error(msg, arg1, arg2, arg3)
+      logger.error(cause)
+      verify(underlying, never).error(anyString, anyObject)
     }
   }
+
+  // "Calling error with a message and parameters" should {
+
+  //   "call the underlying logger's error method if the error level is enabled" in {
+  //     val f = fixture(_.isErrorEnabled, true)
+  //     import f._
+  //     logger.error(msg, arg1)
+  //     verify(underlying).error(msg, List(arg1): _*)
+  //     logger.error(msg, arg1, arg2)
+  //     verify(underlying).error(msg, List(arg1, arg2): _*)
+  //     logger.error(msg, arg1, arg2, arg3)
+  //     verify(underlying).error(msg, arg1, arg2, arg3)
+  //   }
+
+  //   "not call the underlying logger's error method if the error level is not enabled" in {
+  //     val f = fixture(_.isErrorEnabled, false)
+  //     import f._
+  //     logger.error(msg, arg1)
+  //     verify(underlying, never).error(msg, List(arg1): _*)
+  //     logger.error(msg, arg1, arg2)
+  //     verify(underlying, never).error(msg, List(arg1, arg2): _*)
+  //     logger.error(msg, arg1, arg2, arg3)
+  //     verify(underlying, never).error(msg, arg1, arg2, arg3)
+  //   }
+  // }
 
   // Warn
 
@@ -121,30 +138,30 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
     }
   }
 
-  "Calling warn with a message and parameters" should {
+  // "Calling warn with a message and parameters" should {
 
-    "call the underlying logger's warn method if the warn level is enabled" in {
-      val f = fixture(_.isWarnEnabled, true)
-      import f._
-      logger.warn(msg, arg1)
-      verify(underlying).warn(msg, List(arg1): _*)
-      logger.warn(msg, arg1, arg2)
-      verify(underlying).warn(msg, List(arg1, arg2): _*)
-      logger.warn(msg, arg1, arg2, arg3)
-      verify(underlying).warn(msg, arg1, arg2, arg3)
-    }
+  //   "call the underlying logger's warn method if the warn level is enabled" in {
+  //     val f = fixture(_.isWarnEnabled, true)
+  //     import f._
+  //     logger.warn(msg, arg1)
+  //     verify(underlying).warn(msg, List(arg1): _*)
+  //     logger.warn(msg, arg1, arg2)
+  //     verify(underlying).warn(msg, List(arg1, arg2): _*)
+  //     logger.warn(msg, arg1, arg2, arg3)
+  //     verify(underlying).warn(msg, arg1, arg2, arg3)
+  //   }
 
-    "not call the underlying logger's warn method if the warn level is not enabled" in {
-      val f = fixture(_.isWarnEnabled, false)
-      import f._
-      logger.warn(msg, arg1)
-      verify(underlying, never).warn(msg, List(arg1): _*)
-      logger.warn(msg, arg1, arg2)
-      verify(underlying, never).warn(msg, List(arg1, arg2): _*)
-      logger.warn(msg, arg1, arg2, arg3)
-      verify(underlying, never).warn(msg, arg1, arg2, arg3)
-    }
-  }
+  //   "not call the underlying logger's warn method if the warn level is not enabled" in {
+  //     val f = fixture(_.isWarnEnabled, false)
+  //     import f._
+  //     logger.warn(msg, arg1)
+  //     verify(underlying, never).warn(msg, List(arg1): _*)
+  //     logger.warn(msg, arg1, arg2)
+  //     verify(underlying, never).warn(msg, List(arg1, arg2): _*)
+  //     logger.warn(msg, arg1, arg2, arg3)
+  //     verify(underlying, never).warn(msg, arg1, arg2, arg3)
+  //   }
+  // }
 
   // Info
 
@@ -182,30 +199,30 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
     }
   }
 
-  "Calling info with a message and parameters" should {
+  // "Calling info with a message and parameters" should {
 
-    "call the underlying logger's info method if the info level is enabled" in {
-      val f = fixture(_.isInfoEnabled, true)
-      import f._
-      logger.info(msg, arg1)
-      verify(underlying).info(msg, List(arg1): _*)
-      logger.info(msg, arg1, arg2)
-      verify(underlying).info(msg, List(arg1, arg2): _*)
-      logger.info(msg, arg1, arg2, arg3)
-      verify(underlying).info(msg, arg1, arg2, arg3)
-    }
+  //   "call the underlying logger's info method if the info level is enabled" in {
+  //     val f = fixture(_.isInfoEnabled, true)
+  //     import f._
+  //     logger.info(msg, arg1)
+  //     verify(underlying).info(msg, List(arg1): _*)
+  //     logger.info(msg, arg1, arg2)
+  //     verify(underlying).info(msg, List(arg1, arg2): _*)
+  //     logger.info(msg, arg1, arg2, arg3)
+  //     verify(underlying).info(msg, arg1, arg2, arg3)
+  //   }
 
-    "not call the underlying logger's info method if the info level is not enabled" in {
-      val f = fixture(_.isInfoEnabled, false)
-      import f._
-      logger.info(msg, arg1)
-      verify(underlying, never).info(msg, List(arg1): _*)
-      logger.info(msg, arg1, arg2)
-      verify(underlying, never).info(msg, List(arg1, arg2): _*)
-      logger.info(msg, arg1, arg2, arg3)
-      verify(underlying, never).info(msg, arg1, arg2, arg3)
-    }
-  }
+  //   "not call the underlying logger's info method if the info level is not enabled" in {
+  //     val f = fixture(_.isInfoEnabled, false)
+  //     import f._
+  //     logger.info(msg, arg1)
+  //     verify(underlying, never).info(msg, List(arg1): _*)
+  //     logger.info(msg, arg1, arg2)
+  //     verify(underlying, never).info(msg, List(arg1, arg2): _*)
+  //     logger.info(msg, arg1, arg2, arg3)
+  //     verify(underlying, never).info(msg, arg1, arg2, arg3)
+  //   }
+  // }
 
   // Debug
 
@@ -243,30 +260,30 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
     }
   }
 
-  "Calling debug with a message and parameters" should {
+  // "Calling debug with a message and parameters" should {
 
-    "call the underlying logger's debug method if the debug level is enabled" in {
-      val f = fixture(_.isDebugEnabled, true)
-      import f._
-      logger.debug(msg, arg1)
-      verify(underlying).debug(msg, List(arg1): _*)
-      logger.debug(msg, arg1, arg2)
-      verify(underlying).debug(msg, List(arg1, arg2): _*)
-      logger.debug(msg, arg1, arg2, arg3)
-      verify(underlying).debug(msg, arg1, arg2, arg3)
-    }
+  //   "call the underlying logger's debug method if the debug level is enabled" in {
+  //     val f = fixture(_.isDebugEnabled, true)
+  //     import f._
+  //     logger.debug(msg, arg1)
+  //     verify(underlying).debug(msg, List(arg1): _*)
+  //     logger.debug(msg, arg1, arg2)
+  //     verify(underlying).debug(msg, List(arg1, arg2): _*)
+  //     logger.debug(msg, arg1, arg2, arg3)
+  //     verify(underlying).debug(msg, arg1, arg2, arg3)
+  //   }
 
-    "not call the underlying logger's debug method if the debug level is not enabled" in {
-      val f = fixture(_.isDebugEnabled, false)
-      import f._
-      logger.debug(msg, arg1)
-      verify(underlying, never).debug(msg, List(arg1): _*)
-      logger.debug(msg, arg1, arg2)
-      verify(underlying, never).debug(msg, List(arg1, arg2): _*)
-      logger.debug(msg, arg1, arg2, arg3)
-      verify(underlying, never).debug(msg, arg1, arg2, arg3)
-    }
-  }
+  //   "not call the underlying logger's debug method if the debug level is not enabled" in {
+  //     val f = fixture(_.isDebugEnabled, false)
+  //     import f._
+  //     logger.debug(msg, arg1)
+  //     verify(underlying, never).debug(msg, List(arg1): _*)
+  //     logger.debug(msg, arg1, arg2)
+  //     verify(underlying, never).debug(msg, List(arg1, arg2): _*)
+  //     logger.debug(msg, arg1, arg2, arg3)
+  //     verify(underlying, never).debug(msg, arg1, arg2, arg3)
+  //   }
+  // }
 
   // Trace
 
@@ -304,30 +321,30 @@ class LoggerSpec extends WordSpec with Matchers with MockitoSugar {
     }
   }
 
-  "Calling trace with a message and parameters" should {
+  // "Calling trace with a message and parameters" should {
 
-    "call the underlying logger's trace method if the trace level is enabled" in {
-      val f = fixture(_.isTraceEnabled, true)
-      import f._
-      logger.trace(msg, arg1)
-      verify(underlying).trace(msg, List(arg1): _*)
-      logger.trace(msg, arg1, arg2)
-      verify(underlying).trace(msg, List(arg1, arg2): _*)
-      logger.trace(msg, arg1, arg2, arg3)
-      verify(underlying).trace(msg, arg1, arg2, arg3)
-    }
+  //   "call the underlying logger's trace method if the trace level is enabled" in {
+  //     val f = fixture(_.isTraceEnabled, true)
+  //     import f._
+  //     logger.trace(msg, arg1)
+  //     verify(underlying).trace(msg, List(arg1): _*)
+  //     logger.trace(msg, arg1, arg2)
+  //     verify(underlying).trace(msg, List(arg1, arg2): _*)
+  //     logger.trace(msg, arg1, arg2, arg3)
+  //     verify(underlying).trace(msg, arg1, arg2, arg3)
+  //   }
 
-    "not call the underlying logger's trace method if the trace level is not enabled" in {
-      val f = fixture(_.isTraceEnabled, false)
-      import f._
-      logger.trace(msg, arg1)
-      verify(underlying, never).trace(msg, List(arg1): _*)
-      logger.trace(msg, arg1, arg2)
-      verify(underlying, never).trace(msg, List(arg1, arg2): _*)
-      logger.trace(msg, arg1, arg2, arg3)
-      verify(underlying, never).trace(msg, arg1, arg2, arg3)
-    }
-  }
+  //   "not call the underlying logger's trace method if the trace level is not enabled" in {
+  //     val f = fixture(_.isTraceEnabled, false)
+  //     import f._
+  //     logger.trace(msg, arg1)
+  //     verify(underlying, never).trace(msg, List(arg1): _*)
+  //     logger.trace(msg, arg1, arg2)
+  //     verify(underlying, never).trace(msg, List(arg1, arg2): _*)
+  //     logger.trace(msg, arg1, arg2, arg3)
+  //     verify(underlying, never).trace(msg, arg1, arg2, arg3)
+  //   }
+  // }
 
   def fixture(p: Underlying => Boolean, isEnabled: Boolean) =
     new {
